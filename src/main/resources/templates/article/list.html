@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:replace="/includes/header"></div>
+<body>
+    <div class="container" style="padding-top: 100px;">
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th style="width:8%;">글 번호</th>
+                <th>제목</th>
+                <th>작성일</th>
+                <th>삭제</th>
+            </tr>
+            <tr th:each="article : ${articles}">
+                <td th:text="${article.id}"></td>
+                <td>
+                		<a th:href="@{/article/articleDetail/{articleId}(articleId=${article.id})}" th:text="${article.title}"></a>
+                </td>
+                <td th:text="${article.regDate}">
+                </td>
+                <td>
+                		<a th:href="@{/article/delete/{articleId}(articleId=${article.id})}" class="btn btn-danger">삭제</a>
+                </td>
+            </tr>
+        </table>
+        <a href="/article/write" class="btn btn-primary">작성하기</a>
+    </div>
+    <div th:replace="/includes/footer"></div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:replace="/includes/header"></div>
+<body>
+	<div class="container" style="padding-top: 100px;">
+		<div class="panel panel-default">
+			<div class="panel-heading" th:text="${article.title}"></div>
+			<div class="panel-body">
+				<div th:utext="@{작성일 : {articleDate}(articleDate=${article.regDate})}" style="padding-bottom: 10px">
+				</div>
+				<div th:utext="${article.content}"></div>
+			</div>
+		</div>
+		<a href="/article/list" class="btn btn-default">목록으로</a>
+		<a href="/admin/products/edit/" class="btn btn-primary">수정</a>
+	</div>
+	<div th:replace="/includes/footer"></div>
+</body>
+</html>
