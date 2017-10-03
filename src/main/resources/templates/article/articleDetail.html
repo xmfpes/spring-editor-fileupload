@@ -2,17 +2,22 @@
 <html lang="en">
 <div th:replace="/includes/header"></div>
 <body>
-	<div class="container" style="padding-top: 100px;">
-		<div class="panel panel-default">
-			<div class="panel-heading" th:text="${article.title}"></div>
-			<div class="panel-body">
-				<div th:text="|작성일 : ${article.regDate}|" style="padding-bottom: 10px"></div>
-				<div th:utext="${article.content}"></div>
-			</div>
-		</div>
-		<a href="/article/list" class="btn btn-default">목록으로</a>
-		<a href="/admin/products/edit/" class="btn btn-primary">수정</a>
-	</div>
-	<div th:replace="/includes/footer"></div>
+    <div class="container" style="padding-top: 100px;">
+        <div class="panel panel-default">
+            <div class="panel-heading" th:text="${article.title}"></div>
+            <div class="panel-body">
+                <div th:text="|작성일 : ${article.regDate}|" style="padding-bottom: 10px"></div>
+                파일 리스트
+                <div th:each="file : ${article.files}">
+                		 <a th:href="${file.filePath}" th:text="${file.fileName}" th:attr="download=${file.fileName}">
+                		 </a>
+                </div>       
+                <div th:utext="${article.content}"></div>
+            </div>
+        </div>
+        <a href="/article/list" class="btn btn-default">목록으로</a>
+        <a href="/admin/products/edit/" class="btn btn-primary">수정</a>
+    </div>
+    <div th:replace="/includes/footer"></div>
 </body>
 </html>

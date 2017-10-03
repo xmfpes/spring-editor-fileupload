@@ -2,46 +2,57 @@
 <html lang="en">
 <div th:replace="/includes/header"></div>
 <body>
-	<div class="container" style="padding-top: 100px;">
-		<form action="" class="boardSubmit" method="post">
-			<table class="table table-bordered">
-				<tr>
-					<th>글 제목</th>
-					<td><input type="text" name="title" class="form-control" /></td>
-				</tr>
-				<tr>
-					<th>글 내용</th>
-					<td><textarea class="form-control" id="summernote"
-							name="content" placeholder="content" maxlength="140" rows="7"></textarea>
-					</td>
-				</tr>
-			</table>
-			<button class="btn btn-primary">작성하기</button>
-		</form>
-	</div>
-	<div th:replace="/includes/footer"></div>
+    <div class="container" style="padding-top: 100px;">
+        <form action="" class="boardSubmit" method="post" enctype="multipart/form-data">
+            <table class="table table-bordered">
+                <tr>
+                    <th>글 제목</th>
+                    <td><input type="text" name="title" class="form-control" /></td>
+                </tr>
+                <tr>
+                    <th>글 내용</th>
+                    <td><textarea class="form-control" id="summernote"
+                            name="content" placeholder="content" maxlength="140" rows="7"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                		<th>파일</th>
+                		<td>
+                			<div class="fileForm">
+                				<input type="file" name="uploadFiles"/>
+                			</div>
+                		</td>
+                </tr>
+            </table>
+            
+            <button class="btn btn-primary">작성하기</button>
+            <button type="button" class="fileAdd btn btn-success">파일 추가</button>
+        </form>
+    </div>
+    <div th:replace="/includes/footer"></div>
 </body>
 </html>
 <script>
 $(document).ready(function() {
-	var sendFile = function (file, el) {
-	      var form_data = new FormData();
-	      form_data.append('file', file);
-	      $.ajax({
-	        data: form_data,
-	        type: "POST",
-	        url: '/file',
-	        cache: false,
-	        contentType: false,
-	        enctype: 'multipart/form-data',
-	        processData: false,
-	        success: function(url) {
-	        		$('#summernote').summernote('insertImage', url);
-		        $('#imageBoard > ul').append('<li><img src="'+ url +'" width="480" height="auto"/></li>');
-	        }
-	      });
-	    }
-	$('#summernote').summernote({
+    var sendFile = function (file, el) {
+          var form_data = new FormData();
+          form_data.append('file', file);
+          $.ajax({
+            data: form_data,
+            type: "POST",
+            url: '/file',
+            cache: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            success: function(url) {
+                    $('#summernote').summernote('insertImage', url);
+                $('#imageBoard > ul').append('<li><img src="'+ url +'" width="480" height="auto"/></li>');
+
+            }
+          });
+        }
+    $('#summernote').summernote({
         height: 300,
         minHeight: null,
         maxHeight: null,
@@ -54,5 +65,16 @@ $(document).ready(function() {
           }
         }
       });
+});
+</script>
+<script>
+$(document).ready(function(){
+	$('.fileAdd').click(function(){
+		if($('.fileForm').children().length >= 5){
+			alert("파일은 5개 까지만 추가 가능합니다.");
+		}else{
+			$('.fileForm').append('<input type="file" name="uploadFiles"/>');
+		}
+	})
 });
 </script>
