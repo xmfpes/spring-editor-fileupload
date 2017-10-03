@@ -6,8 +6,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading" th:text="${article.title}"></div>
 			<div class="panel-body">
-				<div th:utext="@{작성일 : {articleDate}(articleDate=${article.regDate})}" style="padding-bottom: 10px">
-				</div>
+				<div th:text="|작성일 : ${article.regDate}|" style="padding-bottom: 10px"></div>
 				<div th:utext="${article.content}"></div>
 			</div>
 		</div>

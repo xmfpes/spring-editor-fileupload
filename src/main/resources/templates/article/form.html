@@ -22,3 +22,37 @@
 	<div th:replace="/includes/footer"></div>
 </body>
 </html>
+<script>
+$(document).ready(function() {
+	var sendFile = function (file, el) {
+	      var form_data = new FormData();
+	      form_data.append('file', file);
+	      $.ajax({
+	        data: form_data,
+	        type: "POST",
+	        url: '/file/image',
+	        cache: false,
+	        contentType: false,
+	        enctype: 'multipart/form-data',
+	        processData: false,
+	        success: function(url) {
+	        		$('#summernote').summernote('insertImage', url);
+		        $('#imageBoard > ul').append('<li><img src="'+ url +'" width="480" height="auto"/></li>');
+	        }
+	      });
+	    }
+	$('#summernote').summernote({
+        height: 300,
+        minHeight: null,
+        maxHeight: null,
+        focus: true,
+        callbacks: {
+          onImageUpload: function(files, editor, welEditable) {
+            for (var i = files.length - 1; i >= 0; i--) {
+              sendFile(files[i], this);
+            }
+          }
+        }
+      });
+});
+</script>
